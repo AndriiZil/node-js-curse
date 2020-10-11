@@ -40,10 +40,10 @@ class UsersController {
       const { password, email, userName } = req.body;
       const passwordHash = await bcryptjs.hash(password, this.costFactor);
 
-      const existingUser = await User.findUserByEmail(email);
+      const existingUser = await User.findUserByEmail(email); // later
 
       if (existingUser) {
-        return res.status(409).send({ message: 'User already exists.' });
+        return res.status(409).send({ message: 'User already exists.' }); // later
       }
 
       const user = await User.create({
@@ -52,7 +52,7 @@ class UsersController {
         password: passwordHash
       });
 
-      return res.send({
+      return res.status(201).send({
         id: user._id,
         username: user.userName,
         email: user.email
