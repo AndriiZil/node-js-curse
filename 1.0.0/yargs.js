@@ -26,3 +26,6 @@ function checkField(fieldName, user) {
 
 console.log(foundedUser);
 
+// node yargs.js --id=1
+//               --id=1 --name=mike
+//               --id=1 -n=Mike

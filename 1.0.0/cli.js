@@ -10,3 +10,5 @@ switch (operation) {
   default:
     throw new Error('Error!')
 }
+
+// node cli sum 2 3 5 15
