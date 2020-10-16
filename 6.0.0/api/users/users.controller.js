@@ -30,9 +30,13 @@ class UsersController {
   }
 
   async getCurrentUser(req, res, next) {
-    const [ userForResponse ] = UsersController.prepareUserResponse([req.user]);
+    try {
+      const [ userForResponse ] = UsersController.prepareUserResponse([req.user]);
 
-    return res.send(userForResponse);
+      return res.send(userForResponse);
+    } catch (err) {
+      next(err);
+    }
   }
 
   async _createUser(req, res, next) {
