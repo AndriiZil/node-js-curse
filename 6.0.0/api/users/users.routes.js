@@ -9,12 +9,12 @@ router.get('/current', UsersController.authorize, UsersController.getCurrentUser
 
 router.get('/', UsersController.getUsers);
 
-router.patch('/films/favourites/:id', UsersController.authorize, UsersController.validateId, UsersController.addFilmForUser);
+router.delete('/films/favourites', UsersController.authorize, UsersController.removeFilmFromUser);
 
-router.delete('/films/favourites/:id', UsersController.authorize, UsersController.validateId, UsersController.removeFilmFromUser);
+router.patch('/films/favourites/:id', UsersController.authorize, UsersController.validateId, UsersController.addFilmForUser);
 
 router.put('/sign-in', UsersController.validateSignIn, UsersController.signIn);
 
-router.patch('/logout', UsersController.authorize, UsersController.logout)
+router.patch('/logout', UsersController.authorize, UsersController.logout);
 
 module.exports = router;

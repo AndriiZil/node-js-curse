@@ -38,7 +38,7 @@ async function minifyImage(req, res, next) {
     const MINIFIED_DIR = 'static';
 
     await imagemin([req.file.path], {
-      destination: 'images',
+      destination: MINIFIED_DIR,
       plugins: [
         imageminJpegtran(),
         imageminPngquant({
