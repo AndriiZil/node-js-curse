@@ -3,7 +3,7 @@ const UsersController = require('./users.controller');
 
 const router = Router();
 
-router.post('/', UsersController.createUser);
+router.post('/', UsersController.validateUserCreate, UsersController.createUser);
 
 router.get('/current', UsersController.authorize, UsersController.getCurrentUser);
 

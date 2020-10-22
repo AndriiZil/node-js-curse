@@ -17,7 +17,7 @@ class Server {
     this.initMiddleware();
     this.initRoutes();
     await this.initDb();
-    this.startlistening();
+    return this.startlistening(); // return for test
   }
 
   initServer() {
@@ -50,7 +50,7 @@ class Server {
   }
 
   startlistening() {
-    this.server.listen(3000, () => console.log('Server was started.'))
+    return this.server.listen(3000, () => console.log('Server was started.')); // return for tests
   }
 
 }

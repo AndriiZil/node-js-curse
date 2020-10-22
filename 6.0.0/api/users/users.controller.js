@@ -72,13 +72,13 @@ class UsersController {
       const user = await User.findUserByEmail(email);
 
       if (!user) {
-        return res.status(401).send({ message: 'Authentication failed. '});
+        throw new UnauthorizedError('Authentication failed.');
       }
 
       const isPasswordValid = await bcryptjs.compare(password, user.password);
 
       if (!isPasswordValid) {
-        return res.status(401).send({ message: 'Authentication failed. '});
+        throw new UnauthorizedError('Authentication failed.');
       }
 
       const token = await jwt.sign({ id: user._id }, 'secret', {
@@ -180,6 +180,16 @@ class UsersController {
     } catch (err) {
       next(err);
     }
+  }
+
+  validateUserCreate(req, res, next) {
+    const createUserRules = Joi.object({
+      password: Joi.string().required(),
+      email: Joi.string().required(),
+      userName: Joi.string().required()
+    });
+
+    UsersController.checkErrorValidation(createUserRules, req, res, next);
   }
 
   validateSignIn(req, res, next) {
