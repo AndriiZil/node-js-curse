@@ -29,5 +29,5 @@ async function findUserByIdAndUpdate(userId, updateParams) {
   }, { new: true });
 }
 
-// users
+// auth
 module.exports = model('User', UserSchema);

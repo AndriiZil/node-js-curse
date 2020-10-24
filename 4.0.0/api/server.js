@@ -30,7 +30,7 @@ module.exports = class UsersServer {
   }
 
   initRoutes() {
-    this.server.use('/users', userRouter);
+    this.server.use('/auth', userRouter);
   }
 
   errorhandler() {

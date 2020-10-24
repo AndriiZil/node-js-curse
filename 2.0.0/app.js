@@ -20,7 +20,7 @@ app.post('/example', (req, res) => {
   res.send(req.body);
 });
 
-app.get('/users', (req, res, next) => {
+app.get('/auth', (req, res, next) => {
 
   const error = new Error('Error');
   error.status = 400;

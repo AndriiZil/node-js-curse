@@ -16,15 +16,15 @@ async function main() {
 
   db = client.db(DB_NAME);
 
-  usersCollection = db.collection('users');
+  usersCollection = db.collection('auth');
 
   app.use(express.json());
 
-  app.post('/users', validateCreateUser, createUser);
-  app.get('/users', getUsers);
-  app.get('/users/:id', getUserById);
-  app.delete('/users/:id', deleteUserById);
-  app.put('/users/:id', validateUpdateUser, updateUserById);
+  app.post('/auth', validateCreateUser, createUser);
+  app.get('/auth', getUsers);
+  app.get('/auth/:id', getUserById);
+  app.delete('/auth/:id', deleteUserById);
+  app.put('/auth/:id', validateUpdateUser, updateUserById);
 
   app.listen(
     PORT,

@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
 
+const authRoutes = require('./auth/auth.router');
+
 const { error } = require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 if (error) {
     throw new Error(error);
 }
-
-const usersRoutes = require('./users/users.router');
 
 class Server {
 
@@ -36,7 +36,7 @@ class Server {
     }
 
     initRoutes() {
-        this.server.use('/users', usersRoutes);
+        this.server.use('/auth', authRoutes);
     }
 
     async initDb() {

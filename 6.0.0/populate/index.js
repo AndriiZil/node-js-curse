@@ -10,7 +10,7 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 
-app.get('/users', async (req, res) => {
+app.get('/auth', async (req, res) => {
     try {
         const users = await StoryModel
             .find()
@@ -23,7 +23,7 @@ app.get('/users', async (req, res) => {
     }
 });
 
-app.post('/users', async (req, res) => {
+app.post('/auth', async (req, res) => {
     try {
         const { name, age, title, street } = req.body;
 

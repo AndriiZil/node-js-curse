@@ -1,17 +1,20 @@
 const { v4: uuidv4 } = require('uuid');
 const nodemailer = require('nodemailer');
 
-const UserModel = require('./users.model');
+const UserModel = require('./auth.model');
+const {
+    InvalidUserInput,
+    NotFoundError,
+    UnauthorizedError
+} = require('../error');
 
-class UsersController {
+class AuthController {
 
-    async createUser(req, res, next) {
+    async signUpUser(req, res, next) {
         try {
             const user = await UserModel.create(req.body);
 
-            console.log('USER', user);
-
-            await UsersController.sendVerificationEmail(user);
+            await AuthController.sendVerificationEmail(user);
 
             return res.send({
                 user: {
@@ -40,10 +43,10 @@ class UsersController {
             const userToVerify = await UserModel.findOne({ verificationToken });
 
             if (!userToVerify) {
-                throw new Error('User was not found.');
+                throw new NotFoundError('User was not found.');
             }
 
-            await UsersController.verifyUser(userToVerify._id);
+            await AuthController.verifyUser(userToVerify._id);
 
             return res.send({ message: 'User was verified' });
         } catch (err) {
@@ -58,19 +61,15 @@ class UsersController {
             const user = await UserModel.findOne({ email });
 
             if (!user) {
-                const error = new Error('User was not found.');
-                error.status = 404;
-                throw error;
+                throw new NotFoundError('User was not found.');
             }
 
             if (user.password !== password) {
-                throw new Error('Password does not match.');
+                throw new InvalidUserInput('Password does not match.');
             }
 
             if (user.status !== 'Verified') {
-                const error = new Error('User was not verified.');
-                error.status = 401;
-                throw error;
+                throw new UnauthorizedError('User was not verified.');
             }
 
             return res.send({ token: 'sa4d8as4d1a5s618as74das54d' });
@@ -84,10 +83,12 @@ class UsersController {
             status: 'Verified',
             verificationToken: null
         });
+
+        return 'success';
     }
 
     static async sendVerificationEmail(user) {
-        const verificationToken = await UsersController.saveVerificationToken(user._id);
+        const verificationToken = await AuthController.saveVerificationToken(user._id);
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -106,11 +107,7 @@ class UsersController {
             html: `<a href='${verificationUrl}'>Click here</a>`
         };
 
-        const result = await transporter.sendMail(mailOptions);
-
-        console.log(result);
-
-        return result;
+        return transporter.sendMail(mailOptions);
     }
 
     static async saveVerificationToken(userId) {
@@ -125,4 +122,4 @@ class UsersController {
 
 }
 
-module.exports = new UsersController();
+module.exports = new AuthController();

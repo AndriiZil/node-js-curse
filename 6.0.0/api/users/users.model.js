@@ -21,5 +21,5 @@ async function updateToken(id, token) {
   }, { new: true })
 }
 
-// users
+// auth
 module.exports = model('User', UserSchema);

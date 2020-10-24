@@ -16,11 +16,11 @@ describe('Acceptance tests suitcase example', () => {
         server.close();
     });
 
-    describe('POST /users', () => {
+    describe('POST /auth', () => {
 
         it('should return status 422 error', async () => {
             await request(server)
-                .post('/users')
+                .post('/auth')
                 .set('Content-Type', 'application/json')
                 .send({})
                 .expect(422);
@@ -44,7 +44,7 @@ describe('Acceptance tests suitcase example', () => {
 
             it('should return status 409 error', async () => {
                 await request(server)
-                    .post('/users')
+                    .post('/auth')
                     .set('Content-Type', 'application/json')
                     .send({
                         userName: 'test',
@@ -69,7 +69,7 @@ describe('Acceptance tests suitcase example', () => {
 
             it('should return status 201 error', async () => {
                 const response = await request(server)
-                    .post('/users')
+                    .post('/auth')
                     .set('Content-Type', 'application/json')
                     .send({
                         userName: 'test',

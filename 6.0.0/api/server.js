@@ -30,7 +30,7 @@ class Server {
   }
 
   initRoutes() {
-    this.server.use('/users', usersRoutes);
+    this.server.use('/auth', usersRoutes);
     this.server.use('/films', filmsRoutes);
     this.server.use('/aggregation', aggregateRoutes);
   }
