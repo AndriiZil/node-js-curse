@@ -20,4 +20,5 @@
 8.0.0/node_modules
 9.0.0/node_modules
 9.0.0/.env
-
+socket/node_modules
+socket/.env
