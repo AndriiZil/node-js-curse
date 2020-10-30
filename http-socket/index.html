@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обмен сообщениями в режиме реального времени</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script>
+  let localMessages = [];
+
+  // start local update message
+  axios.get('http://localhost:8080/messages')
+    .then(({data}) => localMessages = data.messages);
+
+  // update list of messages
+  const updateMessages = () => {
+    axios.get('http://localhost:8080/messages')
+      .then(({data}) => {
+        console.log('data.messages', data.messages);
+        const difference = data.messages.splice(localMessages.length);
+        console.log('difference', difference);
+        difference.forEach(message => {
+          console.log(message);
+          localMessages.push(message);
+        });
+      })
+      .catch(console.log);
+  }
+
+  // send message
+  const sendMessage = text => {
+    axios.post('http://localhost:8080/messages', {text});
+  }
+  // check messages every 200ms
+  setInterval(updateMessages, 200);
+</script>
+</body>
+</html>
