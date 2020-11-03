@@ -24,3 +24,4 @@ socket/node_modules
 socket/.env
 websocket/node_modules
 http-socket/node_modules
+testing/node_modules
